@@ -1,0 +1,11 @@
+# Stateless CSRF for login/logout only. Forms (e.g. EasyAdmin CRUD) use session-based
+# CSRF because stateless requires a cookie set by JavaScript that EasyAdmin forms don't use.
+framework:
+    form:
+        csrf_protection:
+            token_id: submit
+
+    csrf_protection:
+        stateless_token_ids:
+            - authenticate
+            - logout
