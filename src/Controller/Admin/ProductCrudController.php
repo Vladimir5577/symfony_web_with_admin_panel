@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Validator\Constraints\Image;
@@ -39,7 +40,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setBasePath('uploads/images')           // URL prefix for Twig/frontend
                 ->setRequired(false)
                 ->setFileConstraints(new Image(maxSize: '9M')),  // Allow images up to 5 MB (default was 2 MiB)
-            TextEditorField::new('description')->hideOnIndex(),
+            TextareaField::new('description')->hideOnIndex(),
             NumberField::new('price')->setNumDecimals(2),
             BooleanField::new('isActive', 'Active'),
             DateTimeField::new('createdAt', 'Дата создания')->hideOnIndex()->onlyWhenUpdating()->setFormTypeOption('disabled', true),

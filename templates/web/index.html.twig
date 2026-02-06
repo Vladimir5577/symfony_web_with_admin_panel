@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UFE School — обучение фитнес-тренеров</title>
+    <meta name="description" content="2 курса: Персональный фитнес-тренер и Тренер групповых программ. 6+ лет, 500+ выпускников. Консультация в Telegram." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="UFE School — обучение фитнес-тренеров" />
+    <meta property="og:description" content="2 курса. 6+ лет, 500+ выпускников. Консультация в Telegram." />
+    <meta property="og:type" content="website" />
+
+    <style>
+        :root{
+            --bg:#070A12;
+            --card: rgba(255,255,255,.06);
+            --stroke: rgba(255,255,255,.12);
+            --text: rgba(255,255,255,.92);
+            --muted: rgba(255,255,255,.68);
+            --muted2: rgba(255,255,255,.55);
+            --shadow: 0 16px 50px rgba(0,0,0,.45);
+            --radius: 18px;
+            --radius2: 22px;
+            --lime: #c9f23d;
+            --white: #ffffff;
+            --black: #000000;
+            --max: 1120px;
+        }
+
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue";
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x:hidden;
+        }
+        a{color:inherit; text-decoration:none}
+        a:hover{color:#fff}
+
+        /* Background: dark glass + purple glow + noise */
+        .bg-glow{
+            position:fixed; inset:0; pointer-events:none; z-index:-3;
+            background:
+                radial-gradient(900px circle at 70% 8%, rgba(168,85,247,.22), transparent 45%),
+                radial-gradient(900px circle at 22% 18%, rgba(99,102,241,.18), transparent 50%),
+                radial-gradient(900px circle at 50% 95%, rgba(56,189,248,.08), transparent 45%);
+        }
+        .bg-noise{
+            position:fixed; inset:0; pointer-events:none; z-index:-2;
+            opacity:.35;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+        .bg-vignette{
+            position:fixed; inset:-40px; pointer-events:none; z-index:-1;
+            background: radial-gradient(1200px circle at 50% 20%, rgba(0,0,0,0), rgba(0,0,0,.55) 60%, rgba(0,0,0,.75) 100%);
+        }
+
+        /* Layout */
+        .wrap{max-width: var(--max); margin:0 auto; padding: 0 18px;}
+        .section{padding: 70px 0;}
+        .section-tight{padding: 42px 0;}
+        .grid{display:grid; gap:18px;}
+        .grid-2{grid-template-columns: repeat(2, minmax(0, 1fr));}
+        .grid-3{grid-template-columns: repeat(3, minmax(0, 1fr));}
+        @media (max-width: 960px){
+            .grid-3{grid-template-columns: repeat(2, minmax(0, 1fr));}
+        }
+        @media (max-width: 720px){
+            .grid-2,.grid-3{grid-template-columns: 1fr;}
+            .section{padding: 56px 0;}
+        }
+
+        /* Header */
+        .header{
+            position:sticky; top:0; z-index:50;
+            backdrop-filter: blur(14px);
+            background: rgba(0,0,0,.30);
+            border-bottom: 1px solid rgba(255,255,255,.10);
+        }
+        .header-row{
+            display:flex; align-items:center; justify-content:space-between;
+            padding: 14px 0;
+            gap: 14px;
+        }
+        .brand{
+            display:flex; align-items:center; gap:10px;
+            font-weight: 700;
+            letter-spacing: .2px;
+        }
+        .brand-dot{
+            width:10px; height:10px; border-radius:999px;
+            background: linear-gradient(135deg, rgba(168,85,247,1), rgba(99,102,241,1));
+            box-shadow: 0 0 24px rgba(168,85,247,.45);
+        }
+        .nav{
+            display:flex; gap:18px; align-items:center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        .nav a{padding:8px 10px; border-radius: 10px;}
+        .nav a:hover{background: rgba(255,255,255,.06); color:#fff}
+        @media (max-width: 760px){ .nav{display:none} }
+
+        /* Glass card */
+        .glass{
+            background: var(--card);
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius2);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+        .card{padding: 22px;}
+        .card-sm{padding: 16px;}
+        .muted{color: var(--muted)}
+        .muted2{color: var(--muted2)}
+        .kicker{font-size:13px; color: var(--muted); letter-spacing:.2px}
+        .h1{
+            font-size: clamp(30px, 4vw, 52px);
+            line-height: 1.05;
+            margin: 10px 0 0;
+            font-weight: 780;
+            letter-spacing: -0.6px;
+        }
+        .lead{
+            font-size: 16px;
+            line-height: 1.55;
+            margin: 14px 0 0;
+            color: var(--muted);
+            max-width: 56ch;
+        }
+        .h2{
+            font-size: clamp(22px, 2.1vw, 30px);
+            margin:0;
+            letter-spacing:-0.2px;
+            font-weight: 760;
+        }
+        .sub{
+            margin-top:10px;
+            color: var(--muted);
+            line-height:1.6;
+            max-width: 70ch;
+        }
+
+        /* Buttons */
+        .btnrow{display:flex; gap:12px; flex-wrap:wrap; margin-top: 18px;}
+        .btn{
+            display:inline-flex; align-items:center; justify-content:center;
+            gap:10px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-weight: 720;
+            font-size: 14px;
+            border: 1px solid transparent;
+            transition: transform .08s ease, background .15s ease, border-color .15s ease;
+            user-select:none;
+            cursor:pointer;
+        }
+        .btn:active{transform: translateY(1px)}
+        .btn-primary{
+            background: #fff;
+            color: #000;
+        }
+        .btn-primary:hover{background: rgba(255,255,255,.88)}
+        .btn-ghost{
+            background: rgba(255,255,255,.07);
+            border-color: rgba(255,255,255,.12);
+            color: #fff;
+        }
+        .btn-ghost:hover{background: rgba(255,255,255,.10)}
+        .btn-lime{
+            background: rgba(201,242,61,.92);
+            color:#000;
+            box-shadow: 0 10px 30px rgba(201,242,61,.12);
+        }
+        .btn-lime:hover{background: rgba(201,242,61,.84)}
+
+        /* Pills / badges */
+        .pill{
+            display:inline-flex; align-items:center;
+            gap:8px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            color: rgba(255,255,255,.78);
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.10);
+        }
+
+        /* Hero glow blobs */
+        .blob{
+            position:absolute; width: 320px; height: 320px;
+            border-radius: 999px;
+            filter: blur(50px);
+            opacity: .35;
+            pointer-events:none;
+        }
+        .blob-a{background: rgba(168,85,247,.8); top:-160px; right:-120px;}
+        .blob-b{background: rgba(99,102,241,.7); bottom:-180px; left:-120px;}
+        .hero{
+            position:relative;
+            overflow:hidden;
+        }
+
+        /* Course cards */
+        .course-title{font-size:18px; font-weight:760; margin-top:8px;}
+        .course-price{margin-top:8px; font-weight:760;}
+        .course-desc{margin-top:10px; color: var(--muted); line-height:1.55}
+        .course-actions{margin-top:14px; display:flex; gap:10px; flex-wrap:wrap}
+
+        /* Mini feature cards */
+        .mini{
+            padding: 14px;
+            border-radius: var(--radius);
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.10);
+        }
+        .mini-title{font-weight:740}
+        .mini-text{margin-top:6px; color: var(--muted); line-height:1.5; font-size: 13px}
+
+        /* Modules grid */
+        .module{
+            position:relative; overflow:hidden;
+            min-height: 170px;
+        }
+        .module .module-blob{
+            position:absolute; width: 240px; height: 240px; border-radius:999px;
+            filter: blur(44px); opacity:.18; pointer-events:none;
+            top:-120px; right:-120px;
+            background: rgba(168,85,247,1);
+        }
+        .module .module-blob2{
+            position:absolute; width: 260px; height: 260px; border-radius:999px;
+            filter: blur(54px); opacity:.14; pointer-events:none;
+            bottom:-150px; left:-140px;
+            background: rgba(99,102,241,1);
+        }
+        .module .tag{
+            display:inline-flex;
+            font-size: 12px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.06);
+            color: rgba(255,255,255,.78);
+        }
+        .module .mtitle{
+            margin-top: 14px;
+            font-weight: 780;
+            font-size: 16px;
+            line-height: 1.25;
+            letter-spacing: -0.2px;
+        }
+        .module .mcta{
+            margin-top: 18px;
+            display:inline-flex;
+            padding: 10px 14px;
+            border-radius: 14px;
+            background: rgba(201,242,61,.92);
+            color:#000;
+            font-weight: 760;
+            font-size: 13px;
+        }
+        .module .mnote{margin-top:8px; color: rgba(255,255,255,.50); font-size: 12px;}
+        .module .module-img{margin-bottom:12px; border-radius: var(--radius); overflow: hidden;}
+        .module .module-img img{width:100%; height:auto; max-height:140px; object-fit: cover; display: block;}
+
+        /* Experts */
+        .expert{
+            padding: 18px;
+        }
+        .expert-head{display:flex; gap:14px; align-items:flex-start}
+        .avatar{
+            width: 64px; height: 64px;
+            border-radius: 999px;
+            overflow:hidden;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.06);
+            flex: 0 0 auto;
+        }
+        .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+        .ename{font-weight: 780; font-size: 16px; letter-spacing:-0.1px}
+        .erole{margin-top:4px; color: rgba(255,255,255,.55); font-size: 13px}
+        .elist{margin: 14px 0 0; padding: 0; list-style:none; display:grid; gap:10px}
+        .elist li{display:flex; gap:10px; color: var(--muted); line-height:1.45; font-size: 13px}
+        .dot{
+            width: 7px; height: 7px; border-radius: 999px;
+            background: rgba(201,242,61,.95);
+            margin-top: 7px;
+            flex: 0 0 auto;
+            box-shadow: 0 0 24px rgba(201,242,61,.12);
+        }
+
+        /* FAQ */
+        .faq{display:grid; gap:12px}
+        .qa{padding:0; overflow:hidden}
+        .q{
+            display:flex; align-items:center; justify-content:space-between; gap:10px;
+            padding: 16px 18px;
+            cursor:pointer;
+            user-select:none;
+            list-style:none;
+            font-weight: 720;
+            color: rgba(255,255,255,.92);
+        }
+        .q::-webkit-details-marker{display:none}
+        .plus{
+            width: 28px; height: 28px; border-radius: 10px;
+            display:grid; place-items:center;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.10);
+            color: rgba(201,242,61,.95);
+            font-size: 18px;
+            line-height: 1;
+            transition: transform .15s ease;
+            flex: 0 0 auto;
+        }
+        details[open] .plus{transform: rotate(45deg)}
+        .a{
+            padding: 0 18px 16px;
+            color: var(--muted);
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        /* Sticky CTA */
+        .sticky{
+            position: fixed; left:0; right:0; bottom:0;
+            z-index: 60;
+            border-top: 1px solid rgba(255,255,255,.10);
+            background: rgba(0,0,0,.40);
+            backdrop-filter: blur(14px);
+        }
+        .sticky-row{
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 10px 18px;
+            display:flex; align-items:center; justify-content:space-between; gap:12px;
+        }
+        .sticky-text{color: rgba(255,255,255,.72); font-size: 13px}
+        .sticky .btn{padding: 10px 14px; border-radius: 14px}
+        @media (max-width: 560px){
+            .sticky-text{display:none}
+            .sticky-row{justify-content: center}
+        }
+
+        /* Footer */
+        .footer{
+            padding: 46px 0 90px;
+            border-top: 1px solid rgba(255,255,255,.10);
+            color: rgba(255,255,255,.55);
+            font-size: 13px;
+        }
+        .footer-row{display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap}
+        .smalllink{color: rgba(255,255,255,.68)}
+        .smalllink:hover{color:#fff}
+
+        /* Utilities */
+        .mt-10{margin-top: 10px}
+        .mt-14{margin-top: 14px}
+        .mt-18{margin-top: 18px}
+        .mt-24{margin-top: 24px}
+        .mt-30{margin-top: 30px}
+        .mt-36{margin-top: 36px}
+        .mt-44{margin-top: 44px}
+        .anchor{scroll-margin-top: 90px}
+    </style>
+</head>
+
+<body>
+<div class="bg-glow"></div>
+<div class="bg-noise"></div>
+<div class="bg-vignette"></div>
+
+<!-- Header -->
+<header class="header">
+    <div class="wrap">
+        <div class="header-row">
+            <a class="brand" href="#top" aria-label="UFE School">
+                <span class="brand-dot" aria-hidden="true"></span>
+                <span>UFE School</span>
+            </a>
+            <nav class="nav" aria-label="Навигация">
+                <a href="#courses">Курсы</a>
+                <a href="#program">Программа</a>
+                <a href="#experts">Эксперты</a>
+                <a href="#faq">FAQ</a>
+                <a href="#consultation">Консультация</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Main -->
+<main id="top">
+    <!-- Hero -->
+    <section class="section">
+        <div class="wrap">
+            <div class="glass card hero">
+                <div class="blob blob-a" aria-hidden="true"></div>
+                <div class="blob blob-b" aria-hidden="true"></div>
+
+                <div class="pill">6+ лет обучения • 500+ выпускников</div>
+                <h1 class="h1">Обучение фитнес-тренеров, которое ведёт к практике и работе</h1>
+                <p class="lead">
+                    Два курса: персональный тренинг и групповые программы. Главная цель сайта — быстро вывести человека в переписку для консультации и закрыть возражения.
+                </p>
+
+                <div class="btnrow">
+                    <a class="btn btn-primary" id="cta-hero" href="#" target="_blank" rel="noreferrer">
+                        Консультация в Telegram
+                    </a>
+                    <a class="btn btn-ghost" href="#courses">Выбрать курс</a>
+                </div>
+
+                <div class="grid grid-3 mt-24">
+                    <div class="mini">
+                        <div class="mini-title">Поддержка</div>
+                        <div class="mini-text">Вопросы — в чате, без “ожидания созвона”.</div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Практика</div>
+                        <div class="mini-text">Разбор кейсов и типовых ошибок тренеров.</div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Результат</div>
+                        <div class="mini-text">Методика + уверенный старт в профессии.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses -->
+    <section class="section-tight anchor" id="courses">
+        <div class="wrap">
+            <h2 class="h2">Выберите программу</h2>
+            <p class="sub">Если сомневаетесь — нажмите «Консультация», и мы подберём курс по цели и опыту.</p>
+
+            <div class="grid grid-2 mt-24">
+                <div class="glass card">
+                    <div class="kicker">Курс</div>
+                    <div class="course-title">Персональный фитнес-тренер</div>
+                    <div class="course-price">60 000 ₽</div>
+                    <div class="course-desc">
+                        Для тех, кто хочет вести клиентов 1-на-1, выстроить систему работы и начать зарабатывать на персональных тренировках.
+                    </div>
+                    <div class="course-actions">
+                        <a class="btn btn-ghost" href="#course-personal">Подробнее</a>
+                        <a class="btn btn-primary" id="cta-personal" href="#" target="_blank" rel="noreferrer">Написать в Telegram</a>
+                    </div>
+                </div>
+
+                <div class="glass card">
+                    <div class="kicker">Курс</div>
+                    <div class="course-title">Тренер групповых программ</div>
+                    <div class="course-price">25 000 ₽</div>
+                    <div class="course-desc">
+                        Для тех, кто хочет вести групповые занятия: структура урока, подача, безопасность, работа с аудиторией и энергией группы.
+                    </div>
+                    <div class="course-actions">
+                        <a class="btn btn-ghost" href="#course-group">Подробнее</a>
+                        <a class="btn btn-primary" id="cta-group" href="#" target="_blank" rel="noreferrer">Написать в Telegram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course details: Personal -->
+    <section class="section anchor" id="course-personal">
+        <div class="wrap">
+            <div class="glass card">
+                <div class="kicker">Курс • 60 000 ₽</div>
+                <h2 class="h2">Персональный фитнес-тренер</h2>
+                <p class="sub">
+                    Ведёте клиентов 1-на-1: диагностика, техника, планирование, прогрессии, коммуникация и продажи. Упор на практику и понятный алгоритм работы.
+                </p>
+
+                <div class="btnrow">
+                    <a class="btn btn-primary" id="cta-personal-2" href="#" target="_blank" rel="noreferrer">Консультация в Telegram</a>
+                    <a class="btn btn-ghost" href="#program">Смотреть программу</a>
+                </div>
+
+                <div class="grid grid-3 mt-24">
+                    <div class="mini">
+                        <div class="mini-title">Кому подходит</div>
+                        <div class="mini-text">Новичкам с нуля, тем кто тренируется сам, действующим тренерам для систематизации.</div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Что получите</div>
+                        <div class="mini-text">Методика 1-на-1, диагностика, планирование, шаблоны, уверенность в коммуникации.</div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Возражения</div>
+                        <div class="mini-text">Разберём «нет опыта», «сколько времени», «как быстро начать зарабатывать».</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products from DB -->
+    <section class="section-tight anchor" id="program">
+        <div class="wrap">
+            <h2 class="h2">Программа обучения</h2>
+            <p class="sub">Наши курсы и продукты. Реальные уроки будут в GetCourse — здесь показываем структуру.</p>
+
+            <div class="grid grid-3 mt-24" id="products-grid">
+                {% for product in products %}
+                <div class="glass card module">
+                    <div class="module-blob" aria-hidden="true"></div>
+                    <div class="module-blob2" aria-hidden="true"></div>
+                    {% if product.image %}
+                    <div class="module-img">
+                        <img src="{{ ('uploads/images/' ~ product.image) | imagine_filter('thumbnail') }}" alt="{{ product.name|e }}" loading="lazy" />
+                    </div>
+                    {% endif %}
+                    <div class="tag">{% if product.price %}{{ product.price|number_format(0, '', ' ') }} ₽{% else %}Продукт{% endif %}</div>
+                    <div class="mtitle">{{ product.name }}</div>
+                    {% if product.description %}
+                    <div class="mnote">{{ product.description|length > 120 ? product.description|slice(0, 120) ~ '…' : product.description }}</div>
+                    {% endif %}
+                    <a href="{{ path('app_product_show', {id: product.id}) }}" class="mcta">Подробнее</a>
+                </div>
+                {% else %}
+                <div class="muted2">Пока нет активных продуктов.</div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-24 glass card-sm">
+                <div class="muted2" style="font-size:13px; line-height:1.6;">
+                    Для курса «Тренер групповых программ» добавим отдельную сетку модулей, когда пришлёте список (или перенесём аналогично с Тильды).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course details: Group -->
+    <section class="section anchor" id="course-group">
+        <div class="wrap">
+            <div class="glass card">
+                <div class="kicker">Курс • 25 000 ₽</div>
+                <h2 class="h2">Тренер групповых программ</h2>
+                <p class="sub">
+                    Структура занятия, техника и безопасность, подача и голос, работа с залом, темп и динамика. Подходит тем, кто хочет вести группы в студии/клубе.
+                </p>
+
+                <div class="btnrow">
+                    <a class="btn btn-primary" id="cta-group-2" href="#" target="_blank" rel="noreferrer">Консультация в Telegram</a>
+                    <a class="btn btn-ghost" href="#faq">Снять сомнения (FAQ)</a>
+                </div>
+
+                <div class="grid grid-3 mt-24">
+                    <div class="mini">
+                        <div class="mini-title">Кому подходит</div>
+                        <div class="mini-text">Новичкам, кто хочет вести группы; инструкторам для роста методики и подачи.</div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Что получите</div>
+                        <div class="mini-text">Структура урока, управление залом, методика объяснения, готовые сценарии.</div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Возражения</div>
+                        <div class="mini-text">Стеснение, базовая анатомия, совмещение с работой — закрываем на консультации.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experts -->
+    <section class="section-tight anchor" id="experts">
+        <div class="wrap">
+            <h2 class="h2">Эксперты</h2>
+            <p class="sub">Практики, которые дают методику и разбор кейсов. Фото можно заменить в папке /experts/ (или поставить абсолютные ссылки).</p>
+
+            <div class="grid grid-3 mt-24" id="experts-grid">
+                <!-- Experts injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-tight anchor" id="faq">
+        <div class="wrap">
+            <h2 class="h2">Вопросы и ответы</h2>
+            <p class="sub">Самые частые вопросы перед покупкой. Если вопроса нет — пишите в Telegram, ответим в переписке.</p>
+
+            <div class="faq mt-24" id="faq-list">
+                <!-- FAQ injected by JS -->
+            </div>
+
+            <div class="btnrow mt-24">
+                <a class="btn btn-primary" id="cta-faq" href="#" target="_blank" rel="noreferrer">Задать вопрос в Telegram</a>
+                <a class="btn btn-ghost" href="#consultation">Как проходит консультация</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation -->
+    <section class="section anchor" id="consultation">
+        <div class="wrap">
+            <div class="glass card">
+                <div class="kicker">Консультация</div>
+                <h2 class="h2">Подберём курс за 5 минут в переписке</h2>
+                <p class="sub">
+                    В чате уточним цель, опыт и желаемый темп. Сразу ответим по программе, формату, времени и вашим сомнениям.
+                </p>
+
+                <div class="grid grid-2 mt-24">
+                    <div class="mini">
+                        <div class="mini-title">Что обсудим</div>
+                        <div class="mini-text">
+                            Цель и опыт • Какой курс выбрать • Сколько времени нужно • Как начать зарабатывать (пошагово).
+                        </div>
+                    </div>
+                    <div class="mini">
+                        <div class="mini-title">Как написать</div>
+                        <div class="mini-text">
+                            Нажмите кнопку — откроется Telegram с готовым сообщением. Можно сразу дописать: опыт, город, цель.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btnrow mt-24">
+                    <a class="btn btn-primary" id="cta-consult" href="#" target="_blank" rel="noreferrer">Открыть Telegram</a>
+                    <a class="btn btn-ghost" href="#courses">Вернуться к курсам</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-row">
+                <div>© <span id="year"></span> UFE School</div>
+                <div>
+                    Telegram менеджера: <a class="smalllink" href="https://t.me/Ell_vis" target="_blank" rel="noreferrer">t.me/Ell_vis</a>
+                </div>
+            </div>
+            <div class="mt-14 muted2" style="line-height:1.7;">
+                Оплата и страницы GetCourse добавим позже. Сейчас сайт заточен под консультацию в переписке и закрытие основных возражений.
+            </div>
+        </div>
+    </footer>
+</main>
+
+<!-- Sticky CTA -->
+<div class="sticky" role="region" aria-label="Быстрый доступ к консультации">
+    <div class="sticky-row">
+        <div class="sticky-text">Консультация в Telegram — ответим в чате</div>
+        <a class="btn btn-primary" id="cta-sticky" href="#" target="_blank" rel="noreferrer">Написать в Telegram</a>
+    </div>
+</div>
+
+<script>
+    // ========= CONFIG =========
+    const TG_MANAGER = "https://t.me/Ell_vis";
+
+    const TG_TEXT = {
+        general:
+            "👋 Привет! Хочу консультацию по обучению.\n\nИнтересует: пока не определился/ась.\nОпыт: 0/есть.\nЦель: хочу стать тренером и начать зарабатывать.",
+        personal:
+            "👋 Привет! Хочу консультацию по курсу «Персональный фитнес-тренер» (60 000 ₽).\n\nОпыт: 0/есть.\nЦель: хочу вести персонально и набрать клиентов.\nВопрос: с чего начать и сколько времени займёт обучение?",
+        group:
+            "👋 Привет! Хочу консультацию по курсу «Тренер групповых программ» (25 000 ₽).\n\nОпыт: 0/есть.\nЦель: хочу вести группы и начать зарабатывать.\nВопрос: какой график и что нужно для старта?"
+    };
+
+    // Фото: замените src на ваши реальные файлы.
+    // Можно:
+    // 1) положить рядом в папку /experts/ и оставить так: experts/имя.jpg
+    // 2) или вставить абсолютные ссылки на изображения
+    const EXPERTS = [
+        {
+            name: "Евгений Баязитов",
+            img: "experts/evgeniy-bayazitov.jpg",
+            bullets: [
+                "Президент федерации бодибилдинга",
+                "Абсолютный чемпион мира по бодибилдингу среди юниоров",
+                "Серебренный призер чемпионата мира по бодибилдингу"
+            ]
+        },
+        {
+            name: "Дмитрий Сипратов",
+            img: "experts/dmitriy-sipratov.jpg",
+            bullets: ["Персональный тренер", "Врач-диетолог", "Организатор здравоохранения", "Практический опыт: 8 лет"]
+        },
+        {
+            name: "Светлана Толпегина",
+            img: "experts/svetlana-tolpegina.jpg",
+            bullets: ["healthy-коуч, нутрициолог", "Член национального общества диетологов России", "Управляющий фитнес-клуба"]
+        },
+        {
+            name: "Владимир Семенов",
+            img: "experts/vladimir-semenov.jpg",
+            bullets: ["Инструктор по реабилитационному фитнесу", "Кинезиолог", "Консультант - Нутрициолог", "Иглорефлексотерапевт"]
+        },
+        {
+            name: "Виктор Тимошкин",
+            img: "experts/viktor-timoshkin.jpg",
+            bullets: ["Опыт работы: 7,5 лет", "Мастер спорта по гиревому спорту", "Призёр всероссийских соревнований и первенств"]
+        },
+        {
+            name: "Анна Данилова",
+            img: "experts/anna-danilova.jpg",
+            bullets: ["HRD сети фитнес клубов Ultra", "Опыт работы в подборе, адаптации и обучении персонала с 2016 года"]
+        },
+        {
+            name: "Кирилл Дорофеев",
+            img: "experts/kirill-dorofeev.jpg",
+            bullets: ["Мастер-тренер по фитнесу", "Специалист по адаптивной физической культуре и реабилитации", "Мастер спорта по регби"]
+        },
+        {
+            name: "Владислава Иванова",
+            img: "experts/vladislava-ivanova.jpg",
+            bullets: ["Сотрудник МЧС и инструктор по военным дисциплинам и медицине", "Имеет медаль МЧС. Чемпион мира по пожарно-прикладному спорту"]
+        },
+        {
+            name: "Катя Кошелева",
+            img: "experts/katya-kosheleva.jpg",
+            bullets: ["Мастер-тренер по фитнесу", "Специалист физической культуры и реабилитации", "Опыт работы в фитнесе с 2015 года"]
+        }
+    ];
+
+    const FAQ = [
+        {
+            q: "Если у меня только оконченное школьное, я могу получить диплом?",
+            a:
+                "Нет, если у вас нет любого оконченного профессионального образования, вы получите сертификат о прохождении курса и сдачи экзамена. " +
+                "С нашим сертификатом вы с легкостью найдете работу, но в будущем рекомендуем получить профильное образование, если вы хотите строить карьеру в фитнес-индустрии. " +
+                "Если вы будете развиваться онлайн, то диплом не играет такого важного значения."
+        },
+        { q: "Я никогда не работал фитнес-инструктором. У меня получится?", a: "Да. Курс рассчитан на старт с нуля: даём понятную систему, практику и обратную связь. На консультации подскажем траекторию под ваш уровень." },
+        { q: "Для кого будет полезен курс?", a: "Новичкам и действующим тренерам: новичкам — для входа в профессию, тренерам — для систематизации и роста." },
+        { q: "Сколько длятся уроки?", a: "Длительность зависит от темы. Уточним детали по нагрузке и формату на консультации." },
+        { q: "Будут ли записи уроков?", a: "Да, записи доступны в личном кабинете. Сроки доступа и формат уточним на консультации." },
+        { q: "Я точно смогу зарабатывать?", a: "Зависит от вашей активности и стартовой точки. Мы даём методику и алгоритмы, а на консультации подберём план выхода на первые деньги." },
+        { q: "Можно ли повысить тариф позже?", a: "Да, обычно можно. Уточним условия апгрейда на консультации." },
+        { q: "Если я не сдам экзамен с первого раза?", a: "Разберём ошибки и дадим возможность пересдачи. Условия уточним на консультации." },
+        { q: "Образец договора", a: "Пока можно запросить договор в Telegram. Позже добавим ссылку на документ." }
+    ];
+
+    // ========= HELPERS =========
+    function tgLink(text){
+        return TG_MANAGER + "?text=" + encodeURIComponent(text);
+    }
+
+    function setHref(id, href){
+        const el = document.getElementById(id);
+        if(el) el.href = href;
+    }
+
+    // ========= INIT CTA LINKS =========
+    const generalHref = tgLink(TG_TEXT.general);
+    const personalHref = tgLink(TG_TEXT.personal);
+    const groupHref   = tgLink(TG_TEXT.group);
+
+    setHref("cta-hero", generalHref);
+    setHref("cta-sticky", generalHref);
+    setHref("cta-faq", generalHref);
+    setHref("cta-consult", generalHref);
+
+    setHref("cta-personal", personalHref);
+    setHref("cta-personal-2", personalHref);
+
+    setHref("cta-group", groupHref);
+    setHref("cta-group-2", groupHref);
+
+    // ========= RENDER EXPERTS =========
+    const expertsGrid = document.getElementById("experts-grid");
+    if(expertsGrid){
+        expertsGrid.innerHTML = EXPERTS.map(e => `
+        <div class="glass expert">
+          <div class="expert-head">
+            <div class="avatar">
+              <img src="${e.img}" alt="${e.name}" loading="lazy" />
+            </div>
+            <div>
+              <div class="ename">${e.name}</div>
+              <div class="erole">Эксперт курса</div>
+            </div>
+          </div>
+          <ul class="elist">
+            ${e.bullets.map(b => `<li><span class="dot" aria-hidden="true"></span><span>${b}</span></li>`).join("")}
+          </ul>
+        </div>
+      `).join("");
+    }
+
+    // ========= RENDER FAQ =========
+    const faqList = document.getElementById("faq-list");
+    if(faqList){
+        faqList.innerHTML = FAQ.map((it, idx) => `
+        <details class="glass qa" ${idx===0 ? "open" : ""}>
+          <summary class="q">
+            <span>${it.q}</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </summary>
+          <div class="a">${it.a}</div>
+        </details>
+      `).join("");
+    }
+
+    // ========= FOOTER YEAR =========
+    const year = document.getElementById("year");
+    if(year) year.textContent = new Date().getFullYear();
+
+    // ========= OPTIONAL: smooth scroll for anchor links =========
+    document.addEventListener("click", (e) => {
+        const a = e.target.closest("a[href^='#']");
+        if(!a) return;
+        const href = a.getAttribute("href");
+        if(!href || href === "#") return;
+        const el = document.querySelector(href);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:"smooth", block:"start"});
+        history.pushState(null, "", href);
+    });
+</script>
+</body>
+</html>
