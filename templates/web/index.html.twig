@@ -22,7 +22,11 @@
             --shadow: 0 16px 50px rgba(0,0,0,.45);
             --radius: 18px;
             --radius2: 22px;
-            --lime: #c9f23d;
+            --accent: #f97316;
+            --accent-rgb: 249, 115, 22;
+            --accent-dark-rgb: 234, 88, 12;
+            --accent-light-rgb: 251, 146, 60;
+            --lime: var(--accent);
             --white: #ffffff;
             --black: #000000;
             --max: 1120px;
@@ -42,13 +46,58 @@
         a{color:inherit; text-decoration:none}
         a:hover{color:#fff}
 
-        /* Background: dark glass + purple glow + noise */
+        /* Light theme */
+        html.theme-light{
+            --bg: #f1f5f9;
+            --card: rgba(0,0,0,.04);
+            --stroke: rgba(0,0,0,.1);
+            --text: rgba(0,0,0,.88);
+            --muted: rgba(0,0,0,.6);
+            --muted2: rgba(0,0,0,.5);
+            --shadow: 0 16px 50px rgba(0,0,0,.12);
+        }
+        html.theme-light body{ background: var(--bg); color: var(--text); }
+        html.theme-light a:hover{ color: #0f172a; }
+        html.theme-light .bg-glow{ opacity: .7; }
+        html.theme-light .bg-noise{ opacity: .15; }
+        html.theme-light .bg-vignette{ background: radial-gradient(1200px circle at 50% 20%, rgba(0,0,0,0), rgba(0,0,0,.08) 60%, rgba(0,0,0,.15) 100%); }
+        html.theme-light .header{ background: rgba(255,255,255,.75); border-bottom: 1px solid rgba(0,0,0,.08); }
+        html.theme-light .nav a:hover{ background: rgba(0,0,0,.06); color: #0f172a; }
+        html.theme-light .theme-picker label{ color: var(--muted); }
+        html.theme-light .theme-picker input[type="color"]{ border-color: rgba(0,0,0,.2); background: rgba(255,255,255,.9); }
+        html.theme-light .btn-primary{ background: #0f172a; color: #fff; }
+        html.theme-light .btn-primary:hover{ background: #1e293b; }
+        html.theme-light .btn-ghost{ background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.12); color: #0f172a; }
+        html.theme-light .btn-ghost:hover{ background: rgba(0,0,0,.1); }
+        html.theme-light .mini{ background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.08); }
+        html.theme-light .sticky{ border-top: 1px solid rgba(0,0,0,.08); background: rgba(255,255,255,.85); }
+        html.theme-light .footer{ border-top: 1px solid rgba(0,0,0,.08); color: rgba(0,0,0,.5); }
+        html.theme-light .smalllink{ color: rgba(0,0,0,.6); }
+        html.theme-light .smalllink:hover{ color: #0f172a; }
+
+        /* Theme toggle button */
+        .theme-toggle{
+            display:inline-flex; align-items:center; justify-content:center;
+            width: 36px; height: 36px;
+            padding: 0; border: 1px solid rgba(255,255,255,.2);
+            border-radius: 10px;
+            background: rgba(255,255,255,.08);
+            color: var(--muted);
+            cursor: pointer;
+            transition: background .15s, color .15s, border-color .15s;
+        }
+        .theme-toggle:hover{ background: rgba(255,255,255,.12); color: var(--text); }
+        html.theme-light .theme-toggle{ border-color: rgba(0,0,0,.15); background: rgba(0,0,0,.06); color: var(--muted); }
+        html.theme-light .theme-toggle:hover{ background: rgba(0,0,0,.1); color: var(--text); }
+        .theme-toggle svg{ width: 18px; height: 18px; }
+
+        /* Background: dark glass + theme glow + noise */
         .bg-glow{
             position:fixed; inset:0; pointer-events:none; z-index:-3;
             background:
-                radial-gradient(900px circle at 70% 8%, rgba(168,85,247,.22), transparent 45%),
-                radial-gradient(900px circle at 22% 18%, rgba(99,102,241,.18), transparent 50%),
-                radial-gradient(900px circle at 50% 95%, rgba(56,189,248,.08), transparent 45%);
+                radial-gradient(900px circle at 70% 8%, rgba(var(--accent-rgb),.22), transparent 45%),
+                radial-gradient(900px circle at 22% 18%, rgba(var(--accent-dark-rgb),.18), transparent 50%),
+                radial-gradient(900px circle at 50% 95%, rgba(var(--accent-light-rgb),.08), transparent 45%);
         }
         .bg-noise{
             position:fixed; inset:0; pointer-events:none; z-index:-2;
@@ -95,17 +144,27 @@
         }
         .brand-dot{
             width:10px; height:10px; border-radius:999px;
-            background: linear-gradient(135deg, rgba(168,85,247,1), rgba(99,102,241,1));
-            box-shadow: 0 0 24px rgba(168,85,247,.45);
+            background: linear-gradient(135deg, rgba(var(--accent-rgb),1), rgba(var(--accent-dark-rgb),1));
+            box-shadow: 0 0 24px rgba(var(--accent-rgb),.45);
+            transition: box-shadow .3s ease, transform .3s ease;
+        }
+        .brand:hover .brand-dot{
+            box-shadow: 0 0 50px rgba(var(--accent-rgb),1), 0 0 100px rgba(var(--accent-rgb),.4);
+            transform: scale(1.7);
         }
         .nav{
             display:flex; gap:18px; align-items:center;
             color: var(--muted);
             font-size: 14px;
         }
-        .nav a{padding:8px 10px; border-radius: 10px;}
-        .nav a:hover{background: rgba(255,255,255,.06); color:#fff}
-        @media (max-width: 760px){ .nav{display:none} }
+        .nav a{padding:8px 10px; border-radius: 10px; transition: background .2s, color .2s, text-shadow .3s;}
+        .nav a:hover{background: rgba(255,255,255,.06); color:#fff; text-shadow: 0 0 28px rgba(var(--accent-rgb),.6), 0 0 60px rgba(var(--accent-rgb),.2);}
+        .theme-picker{display:flex; align-items:center; gap:8px;}
+        .theme-picker label{font-size: 13px; color: var(--muted); cursor: pointer;}
+        .theme-picker input[type="color"]{width: 32px; height: 32px; padding: 2px; border: 1px solid rgba(255,255,255,.2); border-radius: 10px; cursor: pointer; background: rgba(255,255,255,.08);}
+        .theme-picker input[type="color"]::-webkit-color-swatch-wrapper{padding: 2px;}
+        .theme-picker input[type="color"]::-webkit-color-swatch{border-radius: 6px; border: none;}
+        @media (max-width: 760px){ .nav{display:none} .theme-picker{margin-left:auto} }
 
         /* Glass card */
         .glass{
@@ -114,6 +173,11 @@
             border-radius: var(--radius2);
             box-shadow: var(--shadow);
             backdrop-filter: blur(16px);
+            transition: box-shadow .35s ease, border-color .35s ease, transform .35s ease;
+        }
+        .glass:hover{
+            box-shadow: 0 0 60px rgba(var(--accent-rgb),.35), 0 0 120px rgba(var(--accent-rgb),.12), var(--shadow);
+            border-color: rgba(var(--accent-rgb),.45);
         }
         .card{padding: 22px;}
         .card-sm{padding: 16px;}
@@ -166,19 +230,19 @@
             background: #fff;
             color: #000;
         }
-        .btn-primary:hover{background: rgba(255,255,255,.88)}
+        .btn-primary:hover{background: rgba(255,255,255,.92); box-shadow: 0 0 40px rgba(255,255,255,.45), 0 0 80px rgba(var(--accent-rgb),.2);}
         .btn-ghost{
             background: rgba(255,255,255,.07);
             border-color: rgba(255,255,255,.12);
             color: #fff;
         }
-        .btn-ghost:hover{background: rgba(255,255,255,.10)}
+        .btn-ghost:hover{background: rgba(255,255,255,.12); box-shadow: 0 0 36px rgba(var(--accent-rgb),.2), 0 0 80px rgba(var(--accent-rgb),.08);}
         .btn-lime{
-            background: rgba(201,242,61,.92);
+            background: rgba(var(--accent-rgb),.92);
             color:#000;
-            box-shadow: 0 10px 30px rgba(201,242,61,.12);
+            box-shadow: 0 10px 30px rgba(var(--accent-rgb),.12);
         }
-        .btn-lime:hover{background: rgba(201,242,61,.84)}
+        .btn-lime:hover{background: rgba(var(--accent-rgb),.88); box-shadow: 0 0 50px rgba(var(--accent-rgb),.55), 0 0 100px rgba(var(--accent-rgb),.2);}
 
         /* Pills / badges */
         .pill{
@@ -200,8 +264,8 @@
             opacity: .35;
             pointer-events:none;
         }
-        .blob-a{background: rgba(168,85,247,.8); top:-160px; right:-120px;}
-        .blob-b{background: rgba(99,102,241,.7); bottom:-180px; left:-120px;}
+        .blob-a{background: rgba(var(--accent-rgb),.8); top:-160px; right:-120px;}
+        .blob-b{background: rgba(var(--accent-dark-rgb),.7); bottom:-180px; left:-120px;}
         .hero{
             position:relative;
             overflow:hidden;
@@ -219,6 +283,12 @@
             border-radius: var(--radius);
             background: rgba(255,255,255,.05);
             border: 1px solid rgba(255,255,255,.10);
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+        .mini:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 0 28px rgba(var(--accent-rgb),.15);
+            border-color: rgba(var(--accent-rgb),.2);
         }
         .mini-title{font-weight:740}
         .mini-text{margin-top:6px; color: var(--muted); line-height:1.5; font-size: 13px}
@@ -227,18 +297,26 @@
         .module{
             position:relative; overflow:hidden;
             min-height: 170px;
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
         }
+        .module:hover{
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 0 0 60px rgba(var(--accent-rgb),.4), 0 0 120px rgba(var(--accent-rgb),.15), var(--shadow);
+            border-color: rgba(var(--accent-rgb),.5);
+        }
+        .module:hover .module-blob{ opacity:.55; transition: opacity .4s ease; }
+        .module:hover .module-blob2{ opacity:.45; transition: opacity .4s ease; }
         .module .module-blob{
             position:absolute; width: 240px; height: 240px; border-radius:999px;
             filter: blur(44px); opacity:.18; pointer-events:none;
             top:-120px; right:-120px;
-            background: rgba(168,85,247,1);
+            background: rgba(var(--accent-rgb),1);
         }
         .module .module-blob2{
             position:absolute; width: 260px; height: 260px; border-radius:999px;
             filter: blur(54px); opacity:.14; pointer-events:none;
             bottom:-150px; left:-140px;
-            background: rgba(99,102,241,1);
+            background: rgba(var(--accent-dark-rgb),1);
         }
         .module .tag{
             display:inline-flex;
@@ -261,10 +339,15 @@
             display:inline-flex;
             padding: 10px 14px;
             border-radius: 14px;
-            background: rgba(201,242,61,.92);
+            background: rgba(var(--accent-rgb),.92);
             color:#000;
             font-weight: 760;
             font-size: 13px;
+            transition: box-shadow .3s ease, transform .2s ease;
+        }
+        .module .mcta:hover{
+            box-shadow: 0 0 36px rgba(var(--accent-rgb),.6), 0 0 80px rgba(var(--accent-rgb),.2);
+            transform: translateY(-2px);
         }
         .module .mnote{margin-top:8px; color: rgba(255,255,255,.50); font-size: 12px;}
         .module .module-img{margin-bottom:12px; border-radius: var(--radius); overflow: hidden;}
@@ -273,6 +356,12 @@
         /* Experts */
         .expert{
             padding: 18px;
+            transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+        }
+        .expert:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 0 36px rgba(var(--accent-rgb),.16), var(--shadow);
+            border-color: rgba(var(--accent-rgb),.22);
         }
         .expert-head{display:flex; gap:14px; align-items:flex-start}
         .avatar{
@@ -282,6 +371,11 @@
             border: 1px solid rgba(255,255,255,.12);
             background: rgba(255,255,255,.06);
             flex: 0 0 auto;
+            transition: box-shadow .3s ease, border-color .3s ease;
+        }
+        .expert:hover .avatar{
+            box-shadow: 0 0 36px rgba(var(--accent-rgb),.5), 0 0 70px rgba(var(--accent-rgb),.15);
+            border-color: rgba(var(--accent-rgb),.55);
         }
         .avatar img{width:100%; height:100%; object-fit:cover; display:block}
         .ename{font-weight: 780; font-size: 16px; letter-spacing:-0.1px}
@@ -290,15 +384,16 @@
         .elist li{display:flex; gap:10px; color: var(--muted); line-height:1.45; font-size: 13px}
         .dot{
             width: 7px; height: 7px; border-radius: 999px;
-            background: rgba(201,242,61,.95);
+            background: rgba(var(--accent-rgb),.95);
             margin-top: 7px;
             flex: 0 0 auto;
-            box-shadow: 0 0 24px rgba(201,242,61,.12);
+            box-shadow: 0 0 24px rgba(var(--accent-rgb),.12);
         }
 
         /* FAQ */
         .faq{display:grid; gap:12px}
-        .qa{padding:0; overflow:hidden}
+        .qa{padding:0; overflow:hidden; transition: box-shadow .3s ease, border-color .3s ease;}
+        .qa:hover{ box-shadow: 0 0 28px rgba(var(--accent-rgb),.12); border-color: rgba(var(--accent-rgb),.2); }
         .q{
             display:flex; align-items:center; justify-content:space-between; gap:10px;
             padding: 16px 18px;
@@ -314,7 +409,7 @@
             display:grid; place-items:center;
             background: rgba(255,255,255,.06);
             border: 1px solid rgba(255,255,255,.10);
-            color: rgba(201,242,61,.95);
+            color: rgba(var(--accent-rgb),.95);
             font-size: 18px;
             line-height: 1;
             transition: transform .15s ease;
@@ -356,9 +451,56 @@
             color: rgba(255,255,255,.55);
             font-size: 13px;
         }
-        .footer-row{display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap}
+        .footer-row{display:flex; gap:10px; justify-content:space-between; align-items:center; flex-wrap:wrap}
         .smalllink{color: rgba(255,255,255,.68)}
         .smalllink:hover{color:#fff}
+        .footer-social{display:flex; gap:10px; align-items:center;}
+        .footer-social a{
+            display:inline-flex; align-items:center; justify-content:center;
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.12);
+            color: rgba(255,255,255,.75);
+            transition: background .2s, color .2s, border-color .2s, box-shadow .3s, transform .25s;
+        }
+        .footer-social a:hover{
+            background: rgba(255,255,255,.15); color: #fff;
+            box-shadow: 0 0 36px rgba(var(--accent-rgb),.5), 0 0 80px rgba(var(--accent-rgb),.15);
+            border-color: rgba(var(--accent-rgb),.55);
+            transform: translateY(-5px) scale(1.1);
+        }
+        .footer-social svg{ width: 20px; height: 20px; }
+        html.theme-light .footer-social a{ background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.1); color: rgba(0,0,0,.7); }
+        html.theme-light .footer-social a:hover{ background: rgba(0,0,0,.1); color: #0f172a; }
+
+        /* Parallax layers */
+        [data-parallax]{
+            transition: transform .1s linear;
+            will-change: transform;
+        }
+        .bg-glow{
+            will-change: transform;
+            transition: transform .15s linear;
+        }
+
+        /* Fade-in on scroll */
+        .reveal{
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal.visible{
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tilt card effect */
+        .tilt-card{
+            transition: transform .25s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
 
         /* Utilities */
         .mt-10{margin-top: 10px}
@@ -392,6 +534,16 @@
                 <a href="#faq">FAQ</a>
                 <a href="#consultation">Консультация</a>
             </nav>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <button type="button" class="theme-toggle" id="theme-toggle" title="Светлая / Тёмная тема" aria-label="Переключить тему">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
+                <div class="theme-picker">
+                    <label for="theme-color">Цвет</label>
+                    <input type="color" id="theme-color" value="#f97316" title="Выберите цвет темы" aria-label="Цвет темы" />
+                </div>
+            </div>
         </div>
     </div>
 </header>
@@ -401,9 +553,9 @@
     <!-- Hero -->
     <section class="section">
         <div class="wrap">
-            <div class="glass card hero">
-                <div class="blob blob-a" aria-hidden="true"></div>
-                <div class="blob blob-b" aria-hidden="true"></div>
+            <div class="glass card hero tilt-card">
+                <div class="blob blob-a" aria-hidden="true" data-parallax="-0.3"></div>
+                <div class="blob blob-b" aria-hidden="true" data-parallax="-0.2"></div>
 
                 <div class="pill">6+ лет обучения • 500+ выпускников</div>
                 <h1 class="h1">Обучение фитнес-тренеров, которое ведёт к практике и работе</h1>
@@ -437,7 +589,7 @@
     </section>
 
     <!-- Courses -->
-    <section class="section-tight anchor" id="courses">
+    <section class="section-tight anchor reveal" id="courses">
         <div class="wrap">
             <h2 class="h2">Выберите программу</h2>
             <p class="sub">Если сомневаетесь — нажмите «Консультация», и мы подберём курс по цели и опыту.</p>
@@ -473,7 +625,7 @@
     </section>
 
     <!-- Course details: Personal -->
-    <section class="section anchor" id="course-personal">
+    <section class="section anchor reveal" id="course-personal">
         <div class="wrap">
             <div class="glass card">
                 <div class="kicker">Курс • 60 000 ₽</div>
@@ -506,7 +658,7 @@
     </section>
 
     <!-- Products from DB -->
-    <section class="section-tight anchor" id="program">
+    <section class="section-tight anchor reveal" id="program">
         <div class="wrap">
             <h2 class="h2">Программа обучения</h2>
             <p class="sub">Наши курсы и продукты. Реальные уроки будут в GetCourse — здесь показываем структуру.</p>
@@ -542,7 +694,7 @@
     </section>
 
     <!-- Course details: Group -->
-    <section class="section anchor" id="course-group">
+    <section class="section anchor reveal" id="course-group">
         <div class="wrap">
             <div class="glass card">
                 <div class="kicker">Курс • 25 000 ₽</div>
@@ -575,7 +727,7 @@
     </section>
 
     <!-- Experts -->
-    <section class="section-tight anchor" id="experts">
+    <section class="section-tight anchor reveal" id="experts">
         <div class="wrap">
             <h2 class="h2">Эксперты</h2>
             <p class="sub">Практики, которые дают методику и разбор кейсов. Фото можно заменить в папке /experts/ (или поставить абсолютные ссылки).</p>
@@ -587,7 +739,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="section-tight anchor" id="faq">
+    <section class="section-tight anchor reveal" id="faq">
         <div class="wrap">
             <h2 class="h2">Вопросы и ответы</h2>
             <p class="sub">Самые частые вопросы перед покупкой. Если вопроса нет — пишите в Telegram, ответим в переписке.</p>
@@ -604,7 +756,7 @@
     </section>
 
     <!-- Consultation -->
-    <section class="section anchor" id="consultation">
+    <section class="section anchor reveal" id="consultation">
         <div class="wrap">
             <div class="glass card">
                 <div class="kicker">Консультация</div>
@@ -641,8 +793,16 @@
         <div class="wrap">
             <div class="footer-row">
                 <div>© <span id="year"></span> UFE School</div>
-                <div>
-                    Telegram менеджера: <a class="smalllink" href="https://t.me/Ell_vis" target="_blank" rel="noreferrer">t.me/Ell_vis</a>
+                <div class="footer-social" aria-label="Мы в соцсетях">
+                    <a href="https://t.me/Ell_vis" target="_blank" rel="noreferrer noopener" title="Telegram" aria-label="Telegram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    </a>
+                    <a href="https://wa.me/79001234567" target="_blank" rel="noreferrer noopener" title="WhatsApp" aria-label="WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </a>
+                    <a href="https://vk.com/ufe_school" target="_blank" rel="noreferrer noopener" title="ВКонтакте" aria-label="ВКонтакте">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.391 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.864-.525-2.05-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.863 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.049.17.49-.085.744-.576.744z"/></svg>
+                    </a>
                 </div>
             </div>
             <div class="mt-14 muted2" style="line-height:1.7;">
@@ -824,6 +984,133 @@
         el.scrollIntoView({behavior:"smooth", block:"start"});
         history.pushState(null, "", href);
     });
+
+    // ========= THEME TOGGLE (light/dark) =========
+    (function(){
+        const btn = document.getElementById("theme-toggle");
+        const iconSun = btn && btn.querySelector(".icon-sun");
+        const iconMoon = btn && btn.querySelector(".icon-moon");
+        const html = document.documentElement;
+
+        function isLight(){ return html.classList.contains("theme-light"); }
+        function setIcons(){
+            if(!iconSun || !iconMoon) return;
+            if(isLight()){ iconSun.style.display = "none"; iconMoon.style.display = "block"; }
+            else{ iconSun.style.display = "block"; iconMoon.style.display = "none"; }
+        }
+        function applyMode(light){
+            if(light) html.classList.add("theme-light"); else html.classList.remove("theme-light");
+            setIcons();
+            try{ localStorage.themeMode = light ? "light" : "dark"; }catch(_){}
+        }
+
+        if(btn){
+            btn.addEventListener("click", function(){ applyMode(!isLight()); });
+            try{
+                const saved = localStorage.themeMode;
+                if(saved === "light") applyMode(true);
+                else setIcons();
+            }catch(_){ setIcons(); }
+        }
+    })();
+
+    // ========= THEME COLOR PICKER =========
+    (function(){
+        const input = document.getElementById("theme-color");
+        if(!input) return;
+        const root = document.documentElement;
+
+        function hexToRgb(hex){
+            const m = hex.slice(1).match(/.{2}/g);
+            return m ? m.map(x => parseInt(x, 16)) : [249,115,22];
+        }
+        function darken(r,g,b, f){ return [r,g,b].map(c => Math.round(Math.max(0, c * f))); }
+        function lighten(r,g,b, f){ return [r,g,b].map(c => Math.round(Math.min(255, c * f))); }
+
+        function applyTheme(hex){
+            const [r,g,b] = hexToRgb(hex);
+            root.style.setProperty("--accent", hex);
+            root.style.setProperty("--accent-rgb", [r,g,b].join(", "));
+            root.style.setProperty("--accent-dark-rgb", darken(r,g,b, 0.82).join(", "));
+            root.style.setProperty("--accent-light-rgb", lighten(r,g,b, 1.18).join(", "));
+        }
+
+        input.addEventListener("input", function(){ applyTheme(this.value); });
+        input.addEventListener("change", function(){ applyTheme(this.value); });
+        try{ if(localStorage.themeColor){ input.value = localStorage.themeColor; applyTheme(localStorage.themeColor); } }catch(_){}
+        input.addEventListener("change", function(){ try{ localStorage.themeColor = this.value; }catch(_){} });
+    })();
+
+    // ========= PARALLAX: bg-glow follows scroll =========
+    (function(){
+        const glow = document.querySelector(".bg-glow");
+        let ticking = false;
+        window.addEventListener("scroll", function(){
+            if(!ticking){
+                requestAnimationFrame(function(){
+                    const sy = window.scrollY;
+                    if(glow) glow.style.transform = "translateY(" + (sy * 0.12) + "px)";
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, {passive:true});
+    })();
+
+    // ========= PARALLAX: data-parallax elements move on scroll =========
+    (function(){
+        const els = document.querySelectorAll("[data-parallax]");
+        if(!els.length) return;
+        let ticking = false;
+        window.addEventListener("scroll", function(){
+            if(!ticking){
+                requestAnimationFrame(function(){
+                    const sy = window.scrollY;
+                    els.forEach(function(el){
+                        const speed = parseFloat(el.dataset.parallax) || 0;
+                        el.style.transform = "translateY(" + (sy * speed) + "px)";
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, {passive:true});
+    })();
+
+    // ========= REVEAL ON SCROLL (fade-in sections) =========
+    (function(){
+        const reveals = document.querySelectorAll(".reveal");
+        if(!reveals.length) return;
+        const io = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                if(e.isIntersecting){
+                    e.target.classList.add("visible");
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        reveals.forEach(function(el){ io.observe(el); });
+    })();
+
+    // ========= TILT CARD (hero 3D tilt on mouse move) =========
+    (function(){
+        const cards = document.querySelectorAll(".tilt-card");
+        cards.forEach(function(card){
+            card.addEventListener("mousemove", function(e){
+                const rect = card.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dx = (e.clientX - cx) / (rect.width / 2);
+                const dy = (e.clientY - cy) / (rect.height / 2);
+                const tiltX = dy * -3;
+                const tiltY = dx * 3;
+                card.style.transform = "perspective(1000px) rotateX(" + tiltX + "deg) rotateY(" + tiltY + "deg) scale(1.005)";
+            });
+            card.addEventListener("mouseleave", function(){
+                card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale(1)";
+            });
+        });
+    })();
 </script>
 </body>
 </html>
